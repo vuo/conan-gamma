@@ -23,6 +23,8 @@ class GammaConan(ConanFile):
 
             tools.replace_in_file('Makefile.common', 'DYNAMIC		= 0', 'DYNAMIC = 1')
 
+        self.run('mv %s/COPYRIGHT %s/%s.txt' % (self.source_dir, self.source_dir, self.name))
+
     def build(self):
         with tools.chdir(self.source_dir):
             env_vars = {
@@ -40,6 +42,8 @@ class GammaConan(ConanFile):
     def package(self):
         self.copy('*.h',            src='%s/include' % self.install_dir, dst='include')
         self.copy('libGamma.dylib', src='%s/lib'     % self.install_dir, dst='lib')
+
+        self.copy('%s.txt' % self.name, src=self.source_dir, dst='license')
 
     def package_info(self):
         self.cpp_info.libs = ['Gamma']
