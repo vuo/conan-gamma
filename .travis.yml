@@ -5,19 +5,19 @@ matrix:
           language: cpp
           compiler:
               - clang
-        - os: linux
-          dist: trusty
-          sudo: false
-          language: python
-          python: "3.6"
-          addons:
-              apt:
-                  sources:
-                      - sourceline: 'ppa:beineri/opt-qt594-trusty'
-                  packages:
-                      - libportaudio-dev
-                      - libsndfile1-dev
-                      - qt59qbs
+        # - os: linux
+        #   dist: trusty
+        #   sudo: false
+        #   language: python
+        #   python: "3.6"
+        #   addons:
+        #       apt:
+        #           sources:
+        #               - sourceline: 'ppa:beineri/opt-qt594-trusty'
+        #           packages:
+        #               - libportaudio-dev
+        #               - libsndfile1-dev
+        #               - qt59qbs
 
 before_install:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
