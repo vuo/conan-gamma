@@ -51,7 +51,7 @@ class GammaConan(ConanFile):
                 'LDFLAGS': flags,
             }
             with tools.environment_append(env_vars):
-                self.run('make install DESTDIR=../%s NO_AUDIO_IO=1 NO_SOUNDFILE=1' % self.install_dir)
+                self.run('make install DESTDIR=../%s NO_AUDIO_IO=1' % self.install_dir)
         with tools.chdir(self.install_dir + '/lib'):
             if platform.system() == 'Darwin':
                 self.run('mv libGamma.1.0.dylib libGamma.dylib')

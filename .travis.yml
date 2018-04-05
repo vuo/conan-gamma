@@ -15,6 +15,7 @@ matrix:
                   sources:
                       - sourceline: 'ppa:beineri/opt-qt594-trusty'
                   packages:
+                      - libsndfile1-dev
                       - qt59qbs
 
 before_install:
