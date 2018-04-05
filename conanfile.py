@@ -4,8 +4,8 @@ import platform
 class GammaConan(ConanFile):
     name = 'gamma'
 
-    source_version = '0.9.5'
-    package_version = '2'
+    source_version = '0.9.8'
+    package_version = '1'
     version = '%s-%s' % (source_version, package_version)
 
     requires = 'llvm/3.3-2@vuo/stable', \
@@ -14,7 +14,7 @@ class GammaConan(ConanFile):
     url = 'http://mat.ucsb.edu/gamma/'
     license = 'http://mat.ucsb.edu/gamma/#license'
     description = 'A cross-platform library for doing generic synthesis and filtering of signals'
-    source_dir = 'gamma-%s' % source_version
+    source_dir = 'Gamma-%s' % source_version
     install_dir = '_install'
     libs = {
         'Gamma': 1,
@@ -27,14 +27,13 @@ class GammaConan(ConanFile):
             raise Exception('Unknown platform "%s"' % platform.system())
 
     def source(self):
-        tools.mkdir(self.source_dir)
-        with tools.chdir(self.source_dir):
-            tools.get('http://mat.ucsb.edu/gamma/dl/gamma-%s.tar.gz' % self.source_version,
-                      sha256='9cc24f30c4c418dd9697f12743db2887b35d29a738fe6acb21d82c8eeda6cc5a')
+        tools.get('https://github.com/LancePutnam/Gamma/archive/%s.tar.gz' % self.source_version,
+                  sha256='2ecc7ef250659e58ad80859bb18b8939a8657e4cfaedd12cc1dc20183556950b')
 
+        with tools.chdir(self.source_dir):
             tools.replace_in_file('Makefile.common', 'DYNAMIC		= 0', 'DYNAMIC = 1')
 
-        self.run('mv %s/COPYRIGHT %s/%s.txt' % (self.source_dir, self.source_dir, self.name))
+            self.run('mv COPYRIGHT %s.txt' % self.name)
 
     def build(self):
         import VuoUtils
@@ -52,7 +51,7 @@ class GammaConan(ConanFile):
                 'LDFLAGS': flags,
             }
             with tools.environment_append(env_vars):
-                self.run('make install DESTDIR=../%s' % self.install_dir)
+                self.run('make install DESTDIR=../%s NO_AUDIO_IO=1 NO_SOUNDFILE=1' % self.install_dir)
         with tools.chdir(self.install_dir + '/lib'):
             if platform.system() == 'Darwin':
                 self.run('mv libGamma.1.0.dylib libGamma.dylib')
