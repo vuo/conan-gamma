@@ -8,7 +8,7 @@ class GammaConan(ConanFile):
     package_version = '1'
     version = '%s-%s' % (source_version, package_version)
 
-    requires = 'llvm/3.3-2@vuo/stable', \
+    build_requires = 'llvm/3.3-5@vuo/stable', \
                'vuoutils/1.0@vuo/stable'
     settings = 'os', 'compiler', 'build_type', 'arch'
     url = 'http://mat.ucsb.edu/gamma/'
@@ -48,6 +48,7 @@ class GammaConan(ConanFile):
                 'CC'     : self.deps_cpp_info['llvm'].rootpath + '/bin/clang',
                 'CXX'    : self.deps_cpp_info['llvm'].rootpath + '/bin/clang++',
                 'CFLAGS' : flags,
+                'CXXFLAGS' : flags + ' -stdlib=libc++ -I' + ' -I'.join(self.deps_cpp_info['llvm'].include_paths),
                 'LDFLAGS': flags,
             }
             with tools.environment_append(env_vars):
