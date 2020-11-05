@@ -1,0 +1,18 @@
+--- src/Scheduler.cpp	2016-04-19 18:14:00.000000000 -0400
++++ src/Scheduler.cpp	2020-11-05 16:52:29.000000000 -0500
+@@ -315,6 +315,7 @@
+ 	int numFrames = io().framesPerBuffer;
+ 	int numChans  = io().channelsOut;
+ 
++#if 0
+ 	SoundFile sf(soundFilePath);
+ 	sf	.encoding(SoundFile::FLOAT)
+ 		.channels(numChans)
+@@ -351,6 +352,7 @@
+ 		
+ 		delete[] buf;
+ 	}
++#endif
+ }
+ 
+ 
